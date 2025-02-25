@@ -42,50 +42,60 @@ document.addEventListener("DOMContentLoaded", () => {
         { name: 'Yaazhini', description: 'An elegant accessory.', price: '$14.99', image: yaazhini }
     ];
 
-    // Generate product cards
-    products.forEach(product => {
-        const colDiv = document.createElement("div");
-        colDiv.classList.add("col-md-4", "mb-4");
+    // Create table container
+    const table = document.createElement("table");
+    table.classList.add("table", "table-bordered", "table-striped", "text-center", "w-100");
 
-        const cardDiv = document.createElement("div");
-        cardDiv.classList.add("card");
-        
+    const thead = document.createElement("thead");
+    const headerRow = document.createElement("tr");
+    ["Product", "Description", "Price", "Action"].forEach(headerText => {
+        const th = document.createElement("th");
+        th.textContent = headerText;
+        headerRow.appendChild(th);
+    });
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    const tbody = document.createElement("tbody");
+    products.forEach((product, index) => {
+        if (index % 3 === 0) {
+            row = document.createElement("tr");
+            tbody.appendChild(row);
+        }
+        const td = document.createElement("td");
+        td.style.padding = "15px";
+        td.style.verticalAlign = "middle";
+
         const img = document.createElement("img");
-        img.classList.add("card-img-top");
         img.src = product.image;
         img.alt = product.name;
-        img.style.maxWidth = "100%";
-        img.style.maxHeight = "200px";
-        img.style.objectFit = "cover";
-
-        const cardBody = document.createElement("div");
-        cardBody.classList.add("card-body");
-
+        img.style.width = "120px";
+        img.style.height = "120px";
+        img.style.display = "block";
+        img.style.margin = "auto";
+        
         const title = document.createElement("h5");
-        title.classList.add("card-title");
         title.textContent = product.name;
-
+        
         const description = document.createElement("p");
-        description.classList.add("card-text");
         description.textContent = product.description;
-
+        
         const price = document.createElement("p");
-        price.classList.add("card-text");
         price.innerHTML = `<strong>${product.price}</strong>`;
-
-        const addToCart = document.createElement("a");
+        
+        const addToCart = document.createElement("button");
         addToCart.classList.add("btn", "btn-primary");
         addToCart.textContent = "Add to Cart";
-        addToCart.href = "#";
-
-        cardBody.appendChild(title);
-        cardBody.appendChild(description);
-        cardBody.appendChild(price);
-        cardBody.appendChild(addToCart);
-        cardDiv.appendChild(img);
-        cardDiv.appendChild(cardBody);
-        colDiv.appendChild(cardDiv);
+        addToCart.onclick = () => alert(`Added ${product.name} to cart!`);
         
-        productsContainer.appendChild(colDiv);
+        td.appendChild(img);
+        td.appendChild(title);
+        td.appendChild(description);
+        td.appendChild(price);
+        td.appendChild(addToCart);
+        row.appendChild(td);
     });
+
+    table.appendChild(tbody);
+    productsContainer.appendChild(table);
 });
