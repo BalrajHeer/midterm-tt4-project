@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // Product list container
     const productsContainer = document.getElementById("products");
+    productsContainer.classList.add("row", "g-4");
 
     // Product data
     const products = [
@@ -42,60 +43,48 @@ document.addEventListener("DOMContentLoaded", () => {
         { name: 'Yaazhini', description: 'An elegant accessory.', price: '$14.99', image: yaazhini }
     ];
 
-    // Create table container
-    const table = document.createElement("table");
-    table.classList.add("table", "table-bordered", "table-striped", "text-center", "w-100");
-
-    const thead = document.createElement("thead");
-    const headerRow = document.createElement("tr");
-    ["Product", "Description", "Price", "Action"].forEach(headerText => {
-        const th = document.createElement("th");
-        th.textContent = headerText;
-        headerRow.appendChild(th);
-    });
-    thead.appendChild(headerRow);
-    table.appendChild(thead);
-
-    const tbody = document.createElement("tbody");
-    products.forEach((product, index) => {
-        if (index % 3 === 0) {
-            row = document.createElement("tr");
-            tbody.appendChild(row);
-        }
-        const td = document.createElement("td");
-        td.style.padding = "15px";
-        td.style.verticalAlign = "middle";
-
+    // Generate Bootstrap cards dynamically
+    products.forEach(product => {
+        const colDiv = document.createElement("div");
+        colDiv.classList.add("col-md-4");
+        
+        const cardDiv = document.createElement("div");
+        cardDiv.classList.add("card", "shadow-sm");
+        
         const img = document.createElement("img");
+        img.classList.add("card-img-top");
         img.src = product.image;
         img.alt = product.name;
-        img.style.width = "120px";
-        img.style.height = "120px";
-        img.style.display = "block";
-        img.style.margin = "auto";
-        
+        img.style.objectFit = "cover";
+        img.style.height = "200px";
+
+        const cardBody = document.createElement("div");
+        cardBody.classList.add("card-body", "text-center");
+
         const title = document.createElement("h5");
+        title.classList.add("card-title");
         title.textContent = product.name;
-        
+
         const description = document.createElement("p");
+        description.classList.add("card-text");
         description.textContent = product.description;
-        
+
         const price = document.createElement("p");
+        price.classList.add("card-text");
         price.innerHTML = `<strong>${product.price}</strong>`;
-        
+
         const addToCart = document.createElement("button");
-        addToCart.classList.add("btn", "btn-primary");
+        addToCart.classList.add("btn", "btn-primary", "w-100");
         addToCart.textContent = "Add to Cart";
         addToCart.onclick = () => alert(`Added ${product.name} to cart!`);
-        
-        td.appendChild(img);
-        td.appendChild(title);
-        td.appendChild(description);
-        td.appendChild(price);
-        td.appendChild(addToCart);
-        row.appendChild(td);
-    });
 
-    table.appendChild(tbody);
-    productsContainer.appendChild(table);
+        cardBody.appendChild(title);
+        cardBody.appendChild(description);
+        cardBody.appendChild(price);
+        cardBody.appendChild(addToCart);
+        cardDiv.appendChild(img);
+        cardDiv.appendChild(cardBody);
+        colDiv.appendChild(cardDiv);
+        productsContainer.appendChild(colDiv);
+    });
 });
