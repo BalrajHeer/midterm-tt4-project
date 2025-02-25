@@ -7,7 +7,7 @@ module.exports = {
   entry: {
     global: path.resolve(__dirname, "global.js"),
     index: path.resolve(__dirname, "index.js"),
-    // listProducts: "./list-products.js",
+      listProducts: "./list-products.js",
     // addProducts: "./add-products.js",
   },
   output: {
@@ -60,11 +60,11 @@ module.exports = {
       chunks: ["global", "index"],
       filename: "index.html",
     }),
-    // new HtmlWebpackPlugin({
-    //   template: "./list-products.html",
-    //   chunks: ["listProducts", "global"],
-    //   filename: "list-products.html",
-    // }),
+     new HtmlWebpackPlugin({
+       template: "./list-products.html",
+       chunks: ["listProducts", "global"],
+       filename: "list-products.html",
+     }),
     // new HtmlWebpackPlugin({
     //   template: "./add-products.html",
     //   chunks: ["addProducts", "global"],
